@@ -2,29 +2,34 @@ import argparse
 from sys import argv
 from Crypto.Hash import SHA256
 
-def create_hash(text):
-    digest = SHA256.new(text).hexdigest()
+def generate_hash(msg):
+    digest = SHA256.new(msg).hexdigest()
     return digest
 
-def verify_hash(text, digest):
-    text_digest = SHA256.new(text).hexdigest()
-    if text_digest == digest:
+def verify_hash(msg, input_digest):
+    msg_digest = SHA256.new(msg).hexdigest()
+    if msg_digest == input_digest:
         return True
     return False
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('cmd', nargs='?', default='create_hash', choices=['create_hash', 'verify_hash'])
-    parser.add_argument("-t", "--text", help="pass string")
-    parser.add_argument("-d", "--digest", help="pass string")
+    parser = argparse.ArgumentParser("A CLI to perform cryptographic operations")
+    subparsers = parser.add_subparsers()
+
+    parser_generate_hash = subparsers.add_parser('generate_hash')
+    parser_generate_hash.add_argument("-m", "--msg", nargs="?")
+
+    parser_verify_hash = subparsers.add_parser('verify_hash')
+    parser_verify_hash.add_argument("-m", "--msg", nargs="?")
+    parser_verify_hash.add_argument("-d", "--digest", nargs="?")
+
     args = parser.parse_args()
-    if args.cmd == 'create_hash':
-        return create_hash(str(args.text))
 
-    elif args.cmd == 'verify_hash':
-        return verify_hash(str(args.text), str(args.digest))
+    subcommand = argv[1]
+    if subcommand == 'generate_hash':
+        return generate_hash(args.msg)
 
-    else:
-        return "Unknown action"
+    elif subcommand == 'verify_hash':
+        return verify_hash(args.msg, args.digest)
 
 print main()
