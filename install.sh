@@ -1,3 +1,4 @@
+#!/bin/bash
 pip install virtualenv
 virtualenv /usr/local/bin/cryptoenv
 source /usr/local/bin/cryptoenv/bin/activate
