@@ -40,7 +40,7 @@ Cipher file for given plain file is successfully created
 $ ls cipher.txt
 cipher.txt
 
-$ decrypt --in cipher.txt --pvtkey pvtkey.pem
+$ cryptoo decrypt --in cipher.txt --pvtkey pvtkey.pem
 Plain file for given cipher file is successfully created
 
 $ cat plain.txt
