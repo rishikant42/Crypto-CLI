@@ -4,6 +4,7 @@ from sys import argv
 
 from Crypto.PublicKey import RSA
 from Crypto.Hash import SHA256
+from Crypto.Cipher import DES3
 from Crypto import Random
 
 from hash_handler import generate_hash, verify_hash
@@ -48,6 +49,46 @@ def decrypt(key_file, cipher_file):
     plain_file.close()
     return "Plain file for given cipher file is successfully created"
 
+def enc_des3(secret, in_file):
+    if len(secret) > 16:
+        return "Error: Secret length should be less than 16 char"
+
+    if len(secret) < 16:
+        secret += ' '*(16-len(secret))
+
+    plain_text = open(in_file, 'r').read()
+
+    if len(plain_text) % 8 != 0:
+        plain_text += ' '*(8 - (len(plain_text) % 8))
+
+    # iv = Random.new().read(DES3.block_size) #DES3.block_size==8
+    iv = 'aaaaaaaa'
+    key = DES3.new(secret, DES3.MODE_OFB, iv)
+
+    cipher = key.encrypt(plain_text)
+    cipher_file = open('cipher.txt', 'w')
+    cipher_file.write(str(cipher))
+    cipher_file.close()
+    return "Cipher file for given plain file is successfully created"
+
+def dec_des3(secret, cipher_file):
+    if len(secret) > 16:
+        return "Error: Secret length should be less than 16 char"
+
+    if len(secret) < 16:
+        secret += ' '*(16-len(secret))
+
+    cipher_text = open(cipher_file, 'r').read()
+
+    iv = 'aaaaaaaa'
+    key = DES3.new(secret, DES3.MODE_OFB, iv)
+
+    plain_text = key.decrypt(cipher_text)
+    plain_text = plain_text.rstrip() + '\n'
+    plain_file = open('plain.txt', 'w')
+    plain_file.write(str(plain_text))
+    plain_file.close()
+    return "Plain file for given cipher file is successfully created"
 
 def main():
     parser = argparse.ArgumentParser("A CLI to perform cryptographic operations")
@@ -72,6 +113,14 @@ def main():
     parser_decrypt.add_argument("-p", "--pvtkey", nargs="?")
     parser_decrypt.add_argument("-i", "--infile", nargs="?")
 
+    parser_enc_des3 = subparsers.add_parser('enc_des3')
+    parser_enc_des3.add_argument("-s", "--secret", nargs="?")
+    parser_enc_des3.add_argument("-i", "--infile", nargs="?")
+
+    parser_dec_des3 = subparsers.add_parser('dec_des3')
+    parser_dec_des3.add_argument("-s", "--secret", nargs="?")
+    parser_dec_des3.add_argument("-i", "--infile", nargs="?")
+
     args = parser.parse_args()
 
     subcommand = argv[1]
@@ -89,6 +138,12 @@ def main():
 
     elif subcommand == 'decrypt':
         return decrypt(args.pvtkey, args.infile)
+
+    elif subcommand == 'enc_des3':
+        return enc_des3(args.secret, args.infile)
+
+    elif subcommand == 'dec_des3':
+        return dec_des3(args.secret, args.infile)
 
 print main()
 # print generate_key_pairs()
