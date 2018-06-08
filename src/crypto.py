@@ -1,5 +1,3 @@
-#!/usr/local/bin/cryptoenv/bin/python
-
 import argparse
 from ast import literal_eval
 from sys import argv
@@ -8,15 +6,7 @@ from Crypto.PublicKey import RSA
 from Crypto.Hash import SHA256
 from Crypto import Random
 
-def generate_hash(msg):
-    digest = SHA256.new(msg).hexdigest()
-    return digest
-
-def verify_hash(msg, input_digest):
-    msg_digest = SHA256.new(msg).hexdigest()
-    if msg_digest == input_digest:
-        return True
-    return False
+from hash_handler import generate_hash, verify_hash
 
 def generate_key_pairs():
     random_generator = Random.new().read
@@ -65,10 +55,12 @@ def main():
 
     parser_generate_hash = subparsers.add_parser('generate_hash')
     parser_generate_hash.add_argument("-m", "--msg", nargs="?")
+    parser_generate_hash.add_argument("-a", "--algo", nargs="?", default='sha256', choices=['md5', 'sha256', 'sha512'])
 
     parser_verify_hash = subparsers.add_parser('verify_hash')
     parser_verify_hash.add_argument("-m", "--msg", nargs="?")
     parser_verify_hash.add_argument("-d", "--digest", nargs="?")
+    parser_verify_hash.add_argument("-a", "--algo", nargs="?", default='sha256', choices=['md5', 'sha256', 'sha512'])
 
     parser_generate_key_pairs = subparsers.add_parser('generate_key_pairs')
 
@@ -84,10 +76,10 @@ def main():
 
     subcommand = argv[1]
     if subcommand == 'generate_hash':
-        return generate_hash(args.msg)
+        return generate_hash(args.msg, args.algo)
 
     elif subcommand == 'verify_hash':
-        return verify_hash(args.msg, args.digest)
+        return verify_hash(args.msg, args.digest, args.algo)
 
     elif subcommand == 'generate_key_pairs':
         return generate_key_pairs()
