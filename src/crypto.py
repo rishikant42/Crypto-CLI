@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import argparse
 from ast import literal_eval
 from sys import argv
