@@ -1,4 +1,4 @@
-#!/Users/rishikant/.virtualenvs/crypto/bin/python
+#!/usr/local/bin/cryptoenv/bin/python
 
 import argparse
 from ast import literal_eval
