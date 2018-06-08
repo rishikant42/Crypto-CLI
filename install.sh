@@ -4,3 +4,4 @@ source /usr/local/bin/cryptoenv/bin/activate
 pip install -r requirements.txt
 chmod a+x cryptoo
 cp cryptoo /usr/local/bin/
+echo "cryptoo CLI is successfully installed"
