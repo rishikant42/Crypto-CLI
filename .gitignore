@@ -1,3 +1,5 @@
 *.pyc
 *.swp
+*.txt
+*.pem
 /others/gitrm.py
