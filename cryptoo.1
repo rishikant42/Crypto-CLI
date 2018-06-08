@@ -1,0 +1,51 @@
+.\" Manpage for cryptoo
+.TH cryptoo 1 "9 June 2018" "1.0" "cryptoo manual"
+.SH NAME
+cryptoo \- A CLI for cryptographic operations.
+.SH SYNOPSIS
+cryptoo [--version | -v] [--help | -h]
+.PP
+cryptoo generate_hash --msg <arg>
+.PP
+cryptoo verify_hash --msg <arg> --digest <arg>
+.PP
+cryptoo generate_key_pairs
+.PP
+cryptoo encrypt --in <painfile> --pubkey <publickey>
+.PP
+cryptoo decrypt --in <cipherfile> --pvtkey <privatekey>
+.SH DESCRIPTION
+.BI cryptoo
+is command line tool to do cryptographic operations. It can be used for
+   --> Generate hash
+   --> Verify hash
+   --> Generate Private-Public key pairs
+   --> Encrypt file
+   --> Decrypt file
+   --> Digital sign
+.SH EXAMPLE
+.PP
+$ cryptoo generate_hash --msg mypassword
+.PP
+89e01536ac207279409d4de1e5253e01f4a1769e696db0d6062ca9b8f56767c8
+.PP
+$ cryptoo verify_hash --msg mypassword --digest 89e01536ac207279409d4de1e5253e01f4a1769e696db0d6062ca9b8f56767c8
+.PP
+True
+.PP
+$ cryptoo generate_key_pairs
+.PP
+Private-Public key pairs are successfully created
+.PP
+$ cryptoo encrypt --in in.txt --pubkey pubkey.pem
+.PP
+Cipher file for given plain file is successfully created
+.PP
+$ cryptoo decrypt --in cipher.txt --pvtkey pvtkey.pem
+.PP
+Plain file for given cipher file is successfully created
+
+.SH BUGS
+https://github.com/rishikant42/Crypto-CLI
+.SH AUTHOR
+Rishi kant sharma
