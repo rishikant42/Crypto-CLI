@@ -45,4 +45,11 @@ Plain file for given cipher file is successfully created
 
 $ cat plain.txt
 Hello World
+
+$ cryptoo crypto.py enc_des3 --in in.txt --secret 'mysecret'
+Plain file for given cipher file is successfully created
+
+$ cryptoo crypto.py dec_des3 --in cipher.txt --secret 'mysecret'
+Cipher file for given plain file is successfully created
+
 ```
