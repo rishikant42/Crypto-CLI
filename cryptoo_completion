@@ -1,0 +1,17 @@
+#!/bin/bash
+_cryptoo()
+{
+  local cur prev opts
+  COMPREPLY=()
+  cur="${COMP_WORDS[COMP_CWORD]}"
+  prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+  opts="generate_hash verify_hash generate_key_pairs encrypt decrypt enc_des3 dec_des3 sign sign_verify"
+
+
+if [[ $COMP_CWORD == 1 ]] ; then
+  COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
+fi
+return 0
+}
+complete -o default -F _cryptoo cryptoo

@@ -10,6 +10,7 @@ from sign_handler import sign, sign_verify
 
 def main():
     parser = argparse.ArgumentParser("A CLI to perform cryptographic operations")
+    parser.add_argument('-v', '--version', action='version', version='0.1')
     subparsers = parser.add_subparsers()
 
     parser_generate_hash = subparsers.add_parser('generate_hash')
