@@ -188,6 +188,84 @@ _cryptoo()
 
   fi
 
+
+  if [[ $COMP_CWORD -gt 5 ]] ; then
+
+    sec_prev="${COMP_WORDS[COMP_CWORD-2]}"
+    fiv_prev="${COMP_WORDS[COMP_CWORD-5]}"
+    for_prev="${COMP_WORDS[COMP_CWORD-4]}"
+
+    if [[ $fiv_prev == verify_hash ]] ; then
+
+      case "${for_prev}" in
+        --msg)
+          if [[ $sec_prev == --algo ]] ; then
+            COMPREPLY=( $(compgen -W "--digest" -- ${cur}) )
+          elif [[ $sec_prev == --digest ]] ; then
+            COMPREPLY=( $(compgen -W "--algo" -- ${cur}) )
+          fi
+          return 0
+          ;;
+
+        --algo)
+          if [[ $sec_prev == --msg ]] ; then
+            COMPREPLY=( $(compgen -W "--digest" -- ${cur}) )
+          elif [[ $sec_prev == --digest ]] ; then
+            COMPREPLY=( $(compgen -W "--msg" -- ${cur}) )
+          fi
+          return 0
+          ;;
+
+        --digest)
+          if [[ $sec_prev == --msg ]] ; then
+            COMPREPLY=( $(compgen -W "--algo" -- ${cur}) )
+          elif [[ $sec_prev == --algo ]] ; then
+            COMPREPLY=( $(compgen -W "--msg" -- ${cur}) )
+          fi
+          return 0
+          ;;
+
+      esac
+
+    fi
+
+    if [[ $fiv_prev == sign_verify ]] ; then
+
+      case "${for_prev}" in
+        --textfile)
+          if [[ $sec_prev == --pubkey ]] ; then
+            COMPREPLY=( $(compgen -W "--signfile" -- ${cur}) )
+          elif [[ $sec_prev == --signfile ]] ; then
+            COMPREPLY=( $(compgen -W "--pubkey" -- ${cur}) )
+          fi
+          return 0
+          ;;
+
+        --pubkey)
+          if [[ $sec_prev == --textfile ]] ; then
+            COMPREPLY=( $(compgen -W "--signfile" -- ${cur}) )
+          elif [[ $sec_prev == --signfile ]] ; then
+            COMPREPLY=( $(compgen -W "--textfile" -- ${cur}) )
+          fi
+          return 0
+          ;;
+
+        --signfile)
+          if [[ $sec_prev == --textfile ]] ; then
+            COMPREPLY=( $(compgen -W "--pubkey" -- ${cur}) )
+          elif [[ $sec_prev == --pubkey ]] ; then
+            COMPREPLY=( $(compgen -W "--textfile" -- ${cur}) )
+          fi
+          return 0
+          ;;
+
+      esac
+
+    fi
+
+  fi
+
+
   if [[ $COMP_CWORD == 1 ]] ; then
     COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
   fi
