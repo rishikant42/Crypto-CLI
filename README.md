@@ -34,28 +34,28 @@ pubkey.pem  pvtkey.pem
 
 $ echo "Hello World" > in.txt
 
-$ cryptoo encrypt --in in.txt --pubkey pubkey.pem
+$ cryptoo encrypt --textfile in.txt --pubkey pubkey.pem
 Cipher file for given plain file is successfully created
 
 $ ls cipher.txt
 cipher.txt
 
-$ cryptoo decrypt --in cipher.txt --pvtkey pvtkey.pem
+$ cryptoo decrypt --cipherfile cipher.txt --pvtkey pvtkey.pem
 Plain file for given cipher file is successfully created
 
 $ cat plain.txt
 Hello World
 
-$ cryptoo enc_des3 --in in.txt --secret 'mysecret'
+$ cryptoo enc_des3 --textfile in.txt --secret 'mysecret'
 Plain file for given cipher file is successfully created
 
-$ cryptoo dec_des3 --in cipher.txt --secret 'mysecret'
+$ cryptoo dec_des3 --cipherfile cipher.txt --secret 'mysecret'
 Cipher file for given plain file is successfully created
 
-$ cryptoo sign --infile in.txt --pvtkey pvtkey.pem
+$ cryptoo sign --textfile in.txt --pvtkey pvtkey.pem
 Signature file is successfully created
 
-$ cryptoo sign_verify --infile in.txt --pubkey pubkey.pem --signfile sign.txt
+$ cryptoo sign_verify --textfile in.txt --pubkey pubkey.pem --signfile sign.txt
 True
 
 ```
