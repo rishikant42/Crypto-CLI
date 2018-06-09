@@ -199,27 +199,27 @@ _cryptoo()
 
       case "${for_prev}" in
         --msg | -m)
-          if [[ $sec_prev == --algo ]] ; then
+          if [[ $sec_prev == --algo || $sec_prev == -a ]] ; then
             COMPREPLY=( $(compgen -W "--digest" -- ${cur}) )
-          elif [[ $sec_prev == --digest ]] ; then
+          elif [[ $sec_prev == --digest || $sec_prev == -d ]] ; then
             COMPREPLY=( $(compgen -W "--algo" -- ${cur}) )
           fi
           return 0
           ;;
 
         --algo | -a)
-          if [[ $sec_prev == --msg ]] ; then
+          if [[ $sec_prev == --msg || $sec_prev == -m ]] ; then
             COMPREPLY=( $(compgen -W "--digest" -- ${cur}) )
-          elif [[ $sec_prev == --digest ]] ; then
+          elif [[ $sec_prev == --digest || $sec_prev == -d ]] ; then
             COMPREPLY=( $(compgen -W "--msg" -- ${cur}) )
           fi
           return 0
           ;;
 
         --digest | -d)
-          if [[ $sec_prev == --msg ]] ; then
+          if [[ $sec_prev == --msg || $sec_prev == -m ]] ; then
             COMPREPLY=( $(compgen -W "--algo" -- ${cur}) )
-          elif [[ $sec_prev == --algo ]] ; then
+          elif [[ $sec_prev == --algo || $sec_prev == -a ]] ; then
             COMPREPLY=( $(compgen -W "--msg" -- ${cur}) )
           fi
           return 0
@@ -233,27 +233,27 @@ _cryptoo()
 
       case "${for_prev}" in
         --textfile | -t)
-          if [[ $sec_prev == --pubkey ]] ; then
+          if [[ $sec_prev == --pubkey || $sec_prev == -p ]] ; then
             COMPREPLY=( $(compgen -W "--signfile" -- ${cur}) )
-          elif [[ $sec_prev == --signfile ]] ; then
+          elif [[ $sec_prev == --signfile || $sec_prev == -s ]] ; then
             COMPREPLY=( $(compgen -W "--pubkey" -- ${cur}) )
           fi
           return 0
           ;;
 
         --pubkey | -p)
-          if [[ $sec_prev == --textfile ]] ; then
+          if [[ $sec_prev == --textfile || $sec_prev == -t ]] ; then
             COMPREPLY=( $(compgen -W "--signfile" -- ${cur}) )
-          elif [[ $sec_prev == --signfile ]] ; then
+          elif [[ $sec_prev == --signfile || $sec_prev == -s ]] ; then
             COMPREPLY=( $(compgen -W "--textfile" -- ${cur}) )
           fi
           return 0
           ;;
 
         --signfile | -s)
-          if [[ $sec_prev == --textfile ]] ; then
+          if [[ $sec_prev == --textfile || $sec_prev == -t ]] ; then
             COMPREPLY=( $(compgen -W "--pubkey" -- ${cur}) )
-          elif [[ $sec_prev == --pubkey ]] ; then
+          elif [[ $sec_prev == --pubkey || $sec_prev == -p ]] ; then
             COMPREPLY=( $(compgen -W "--textfile" -- ${cur}) )
           fi
           return 0
