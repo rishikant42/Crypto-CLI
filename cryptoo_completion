@@ -8,6 +8,50 @@ _cryptoo()
 
   opts="generate_hash verify_hash generate_key_pairs encrypt decrypt enc_des3 dec_des3 sign sign_verify"
 
+  case "${prev}" in
+
+  generate_hash)
+    COMPREPLY=( $(compgen -W "--msg --algo" -- ${cur}) )
+    return 0
+    ;;
+
+  verify_hash)
+    COMPREPLY=( $(compgen -W "--msg --digest --algo" -- ${cur}) )
+    return 0
+    ;;
+
+  encrypt)
+    COMPREPLY=( $(compgen -W "--textfile --pubkey" -- ${cur}) )
+    return 0
+    ;;
+
+  decrypt)
+    COMPREPLY=( $(compgen -W "--cipherfile --pvtkey" -- ${cur}) )
+    return 0
+    ;;
+
+  enc_des3)
+    COMPREPLY=( $(compgen -W "--textfile --secret" -- ${cur}) )
+    return 0
+    ;;
+
+  dec_des3)
+    COMPREPLY=( $(compgen -W "--cipherfile --secret" -- ${cur}) )
+    return 0
+    ;;
+
+  sign)
+    COMPREPLY=( $(compgen -W "--textfile --pvtkey" -- ${cur}) )
+    return 0
+    ;;
+
+  sign_verify)
+    COMPREPLY=( $(compgen -W "--textfile --pubkey --signfile" -- ${cur}) )
+    return 0
+    ;;
+
+  esac
+
 
 if [[ $COMP_CWORD == 1 ]] ; then
   COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
