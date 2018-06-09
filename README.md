@@ -7,11 +7,16 @@ A `cryptoo` Unix/Linux CLI to perform cryptographic operations. Source code is w
 ### Features:
 ```
 * Support multiple hash algorithms(sha256, sha512, md5).
-* Symmetric encryption/decryption
-* Asymmetric encryption (Public key cryptography)
-* Digital signature & verification
+
+* Symmetric encryption/decryption.
+
+* Asymmetric encryption (Public key cryptography).
+
+* Digital signature & verification.
+
 * Fancy bash(tab) completion. Yes, Its really fancy.
-* Manual page ($ man cryptoo)
+
+* Manual page ($ man cryptoo).
 ```
 ### Install instructions:
 ```
@@ -52,36 +57,78 @@ $ cryptoo verify_hash --msg mypassword --digest 34819d7beeabb9260a5c854bc85b3e44
 True
 ```
 
-$ cryptoo generate_key_pairs
-Private-Public key pairs are successfully created
+### Symmetric encryption (Algo: DES3)
 
-$ ls pubkey.pem pvtkey.pem
-pubkey.pem  pvtkey.pem
+```
+* Lets create a simple plaintext file for test
 
-$ echo "Hello World" > in.txt
+$ echo "Hello world" > in.txt
 
-$ cryptoo encrypt --textfile in.txt --pubkey pubkey.pem
+$ cryptoo enc_des3 --textfile in.txt --secret mysecret
 Cipher file for given plain file is successfully created
 
-$ ls cipher.txt
+$ ls cipher.txt 
 cipher.txt
 
-$ cryptoo decrypt --cipherfile cipher.txt --pvtkey pvtkey.pem
+ $ cryptoo dec_des3 --cipherfile cipher.txt --secret mysecret
 Plain file for given cipher file is successfully created
 
-$ cat plain.txt
-Hello World
+$ cat plain.txt 
+Hello world
+```
 
-$ cryptoo enc_des3 --textfile in.txt --secret 'mysecret'
-Plain file for given cipher file is successfully created
+### Public key cryptography(Algo: RSA)
 
-$ cryptoo dec_des3 --cipherfile cipher.txt --secret 'mysecret'
+```
+$ echo "Hello world" > in.txt
+
+* Lets create a private-public key pairs
+
+$ cryptoo generate_key_pairs 
+Private-Public key pairs are successfully created
+
+$ ls pvtkey.pem pubkey.pem 
+pubkey.pem	pvtkey.pem
+
+$ cryptoo encrypt --textfile in.txt --pubkey pubkey.pem 
 Cipher file for given plain file is successfully created
 
-$ cryptoo sign --textfile in.txt --pvtkey pvtkey.pem
+$ cryptoo decrypt --cipherfile cipher.txt --pvtkey pvtkey.pem 
+Plain file for given cipher file is successfully created
+
+$ cat plain.txt 
+Hello world
+```
+
+### Digital sign & verify
+
+```
+$ echo "Hello world" > in.txt
+$ cryptoo generate_key_pairs 
+Private-Public key pairs are successfully created
+
+$ cryptoo sign --pvtkey pvtkey.pem --textfile in.txt 
 Signature file is successfully created
 
-$ cryptoo sign_verify --textfile in.txt --pubkey pubkey.pem --signfile sign.txt
+$ ls sign.txt 
+sign.txt
+
+$ cryptoo sign_verify --pubkey pubkey.pem --textfile in.txt --signfile sign.txt 
 True
+```
+
+### ToDo:
+```
+* Large size file encryption-decryption.
+
+* Proper error handling.
+
+* Implementation of JWT.
+
+* Option to specify name of output file.
+
+* Option to pass text from command line.
+
+* More hashing algo choices.
 
 ```
