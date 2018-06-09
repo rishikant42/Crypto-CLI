@@ -1,23 +1,38 @@
 # Crypto-CLI
 
-A `cryptoo` Unix/Linux CLI to perform cryptographic operations. Source code is written in Python.
+A `cryptoo` Unix/Linux CLI to perform cryptographic operations. Source code is written in Python. 
 
 ---
 
-### Prerequisite:
-* `pip`: https://pypi.org/project/pip/
-* System should have `pip` CLI
-
----
-
+### Features:
+```
+* Support multiple hash algorithms(sha256, sha512, md5).
+* Symmetric encryption/decryption
+* Asymmetric encryption (Public key cryptography)
+* Digital signature & verification
+* Fancy bash(tab) completion. Yes, Its really fancy.
+* Manual page ($ man cryptoo)
+```
 ### Install instructions:
 ```
 $ git clone https://github.com/rishikant42/Crypto-CLI
 $ cd Crypto-CLI
-$ ./install.sh
+$ ./install.sh 
+
+Add following lines to ~/.bashrc (or ~/.bash_profile)
+
+if [ -f /usr/local/etc/bash_completion.d/cryptoo ]; then
+  source /usr/local/etc/bash_completion.d/cryptoo
+fi
+
+Or do copy-paste given line in your shell
+
+echo "if [ -f /usr/local/etc/bash_completion.d/cryptoo ]; then source /usr/local/etc/bash_completion.d/cryptoo; fi" >> ~/.bash_profile
 ```
 
-### Example:
+### Examples:
+
+### Cryptographic Hash
 
 ```
 $ cryptoo generate_hash --msg mypassword
@@ -25,6 +40,17 @@ $ cryptoo generate_hash --msg mypassword
 
 $ cryptoo verify_hash --msg mypassword --digest 89e01536ac207279409d4de1e5253e01f4a1769e696db0d6062ca9b8f56767c8
 True
+```
+
+==> Can specify hashing algorithm from command line. Current choices are `sha256, sha512 and md5`. Default hashing algo is `sha256`.
+
+```
+$ cryptoo generate_hash --msg mypassword --algo md5
+34819d7beeabb9260a5c854bc85b3e44
+
+$ cryptoo verify_hash --msg mypassword --digest 34819d7beeabb9260a5c854bc85b3e44 --algo md5
+True
+```
 
 $ cryptoo generate_key_pairs
 Private-Public key pairs are successfully created
