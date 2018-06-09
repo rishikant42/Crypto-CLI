@@ -26,28 +26,28 @@ def main():
 
     parser_encrypt = subparsers.add_parser('encrypt')
     parser_encrypt.add_argument("-p", "--pubkey", nargs="?")
-    parser_encrypt.add_argument("-i", "--infile", nargs="?")
+    parser_encrypt.add_argument("-t", "--textfile", nargs="?")
 
     parser_decrypt = subparsers.add_parser('decrypt')
     parser_decrypt.add_argument("-p", "--pvtkey", nargs="?")
-    parser_decrypt.add_argument("-i", "--infile", nargs="?")
+    parser_decrypt.add_argument("-c", "--cipherfile", nargs="?")
 
     parser_enc_des3 = subparsers.add_parser('enc_des3')
     parser_enc_des3.add_argument("-s", "--secret", nargs="?")
-    parser_enc_des3.add_argument("-i", "--infile", nargs="?")
+    parser_enc_des3.add_argument("-t", "--textfile", nargs="?")
 
     parser_dec_des3 = subparsers.add_parser('dec_des3')
     parser_dec_des3.add_argument("-s", "--secret", nargs="?")
-    parser_dec_des3.add_argument("-i", "--infile", nargs="?")
+    parser_dec_des3.add_argument("-c", "--cipherfile", nargs="?")
 
     parser_sign = subparsers.add_parser('sign')
     parser_sign.add_argument("-p", "--pvtkey", nargs="?")
-    parser_sign.add_argument("-i", "--infile", nargs="?")
+    parser_sign.add_argument("-t", "--texfile", nargs="?")
 
     parser_sign_verify = subparsers.add_parser('sign_verify')
     parser_sign_verify.add_argument("-p", "--pubkey", nargs="?")
     parser_sign_verify.add_argument("-s", "--signfile", nargs="?")
-    parser_sign_verify.add_argument("-i", "--infile", nargs="?")
+    parser_sign_verify.add_argument("-t", "--textfile", nargs="?")
 
     args = parser.parse_args()
 
@@ -62,25 +62,21 @@ def main():
         return generate_key_pairs()
 
     elif subcommand == 'encrypt':
-        return encrypt(args.pubkey, args.infile)
+        return encrypt(args.pubkey, args.textfile)
 
     elif subcommand == 'decrypt':
-        return decrypt(args.pvtkey, args.infile)
+        return decrypt(args.pvtkey, args.cipherfile)
 
     elif subcommand == 'enc_des3':
-        return enc_des3(args.secret, args.infile)
+        return enc_des3(args.secret, args.textfile)
 
     elif subcommand == 'dec_des3':
-        return dec_des3(args.secret, args.infile)
+        return dec_des3(args.secret, args.cipherfile)
 
     elif subcommand == 'sign':
-        return sign(args.pvtkey, args.infile)
+        return sign(args.pvtkey, args.textfile)
 
     elif subcommand == 'sign_verify':
-        return sign_verify(args.pubkey, args.signfile, args.infile)
+        return sign_verify(args.pubkey, args.signfile, args.textfile)
 
 print main()
-# print generate_key_pairs()
-
-# print encrypt(argv[1], argv[2])
-# print decrypt(argv[1], argv[2])
