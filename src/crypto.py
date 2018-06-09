@@ -6,6 +6,7 @@ from sys import argv
 from hash_handler import generate_hash, verify_hash
 from keys_handler import generate_key_pairs, import_key
 from encrypt_decrypt_handler import encrypt, decrypt, enc_des3, dec_des3
+from sign_handler import sign, sign_verify
 
 def main():
     parser = argparse.ArgumentParser("A CLI to perform cryptographic operations")
@@ -38,6 +39,15 @@ def main():
     parser_dec_des3.add_argument("-s", "--secret", nargs="?")
     parser_dec_des3.add_argument("-i", "--infile", nargs="?")
 
+    parser_sign = subparsers.add_parser('sign')
+    parser_sign.add_argument("-p", "--pvtkey", nargs="?")
+    parser_sign.add_argument("-i", "--infile", nargs="?")
+
+    parser_sign_verify = subparsers.add_parser('sign_verify')
+    parser_sign_verify.add_argument("-p", "--pubkey", nargs="?")
+    parser_sign_verify.add_argument("-s", "--signfile", nargs="?")
+    parser_sign_verify.add_argument("-i", "--infile", nargs="?")
+
     args = parser.parse_args()
 
     subcommand = argv[1]
@@ -61,6 +71,12 @@ def main():
 
     elif subcommand == 'dec_des3':
         return dec_des3(args.secret, args.infile)
+
+    elif subcommand == 'sign':
+        return sign(args.pvtkey, args.infile)
+
+    elif subcommand == 'sign_verify':
+        return sign_verify(args.pubkey, args.signfile, args.infile)
 
 print main()
 # print generate_key_pairs()
