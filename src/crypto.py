@@ -1,96 +1,11 @@
 #!/usr/bin/python2.7
 
 import argparse
-from ast import literal_eval
 from sys import argv
 
-from Crypto.PublicKey import RSA
-from Crypto.Hash import SHA256
-from Crypto.Cipher import DES3
-from Crypto import Random
-
 from hash_handler import generate_hash, verify_hash
-
-def generate_key_pairs():
-    random_generator = Random.new().read
-    key = RSA.generate(1024, random_generator)
-    pvt_key = key.exportKey()
-    pub_key = key.publickey().exportKey()
-
-    pvt_key_file = open('pvtkey.pem', 'w')
-    pvt_key_file.write(pvt_key)
-    pvt_key_file.close()
-
-    pub_key_file = open('pubkey.pem', 'w')
-    pub_key_file.write(pub_key)
-    pub_key_file.close()
-    return "Private-Public key pairs are successfully created"
-
-def import_key(file_name):
-    key = open(file_name, 'r').read()
-    key_object = RSA.importKey(key)
-    return key_object
-
-def encrypt(key_file, in_file):
-    key = import_key(key_file)
-    plain_text = open(in_file, 'r').read()
-    cipher = key.encrypt(plain_text, 32)
-    cipher_file = open('cipher.txt', 'w')
-    cipher_file.write(str(cipher))
-    cipher_file.close()
-    return "Cipher file for given plain file is successfully created"
-
-def decrypt(key_file, cipher_file):
-    key = import_key(key_file)
-    cipher_text = open(cipher_file, 'r').read()
-    cipher = literal_eval(cipher_text)
-    plain_text = key.decrypt(cipher)
-
-    plain_file = open('plain.txt', 'w')
-    plain_file.write(plain_text)
-    plain_file.close()
-    return "Plain file for given cipher file is successfully created"
-
-def enc_des3(secret, in_file):
-    if len(secret) > 16:
-        return "Error: Secret length should be less than 16 char"
-
-    if len(secret) < 16:
-        secret += ' '*(16-len(secret))
-
-    plain_text = open(in_file, 'r').read()
-
-    if len(plain_text) % 8 != 0:
-        plain_text += ' '*(8 - (len(plain_text) % 8))
-
-    # iv = Random.new().read(DES3.block_size) #DES3.block_size==8
-    iv = 'aaaaaaaa'
-    key = DES3.new(secret, DES3.MODE_OFB, iv)
-
-    cipher = key.encrypt(plain_text)
-    cipher_file = open('cipher.txt', 'w')
-    cipher_file.write(str(cipher))
-    cipher_file.close()
-    return "Cipher file for given plain file is successfully created"
-
-def dec_des3(secret, cipher_file):
-    if len(secret) > 16:
-        return "Error: Secret length should be less than 16 char"
-
-    if len(secret) < 16:
-        secret += ' '*(16-len(secret))
-
-    cipher_text = open(cipher_file, 'r').read()
-
-    iv = 'aaaaaaaa'
-    key = DES3.new(secret, DES3.MODE_OFB, iv)
-
-    plain_text = key.decrypt(cipher_text)
-    plain_text = plain_text.rstrip() + '\n'
-    plain_file = open('plain.txt', 'w')
-    plain_file.write(str(plain_text))
-    plain_file.close()
-    return "Plain file for given cipher file is successfully created"
+from keys_handler import generate_key_pairs, import_key
+from encrypt_decrypt_handler import encrypt, decrypt, enc_des3, dec_des3
 
 def main():
     parser = argparse.ArgumentParser("A CLI to perform cryptographic operations")
