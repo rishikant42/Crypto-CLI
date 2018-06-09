@@ -1,49 +1,128 @@
 .\" Manpage for cryptoo
-.TH cryptoo 1 "9 June 2018" "1.0" "cryptoo manual"
+.TH cryptoo 1 "10 June 2018" "1.0" "cryptoo manual"
 .SH NAME
 cryptoo \- A CLI for cryptographic operations.
 .SH SYNOPSIS
 cryptoo [--version | -v] [--help | -h]
 .PP
-cryptoo generate_hash --msg <arg>
+cryptoo generate_hash --msg <arg> --algo <arg>
 .PP
-cryptoo verify_hash --msg <arg> --digest <arg>
+cryptoo verify_hash --msg <arg> --digest <arg> --algo <arg>
 .PP
 cryptoo generate_key_pairs
 .PP
-cryptoo encrypt --in <painfile> --pubkey <publickey>
+cryptoo encrypt --textfile <painfile> --pubkey <publickey>
 .PP
-cryptoo decrypt --in <cipherfile> --pvtkey <privatekey>
+cryptoo decrypt --cipherfile <cipherfile> --pvtkey <privatekey>
+.PP
+cryptoo enc_des3 --textfile <painfile> --secret <secrettext>
+.PP
+cryptoo dec_des3 --cipherfile <cipherfile> --secret <secrettext>
+.PP
+cryptoo sign --textfile <plainfile> --pvtkey <privatekey>
+.PP
+cryptoo sign_verify --textfile <plainfile> --pubkey <publickey> --signfile <signature>
 .SH DESCRIPTION
 .BI cryptoo
-is command line tool to do cryptographic operations. It can be used for
+is a command line tool for cryptographic operations. It can be used for
    --> Generate hash
    --> Verify hash
    --> Generate Private-Public key pairs
    --> Encrypt file
    --> Decrypt file
-   --> Digital sign
+   --> Public key encryption
+   --> Digital signature and verification
 .SH EXAMPLE
+.SH Cryptographic Hash
 .PP
 $ cryptoo generate_hash --msg mypassword
 .PP
 89e01536ac207279409d4de1e5253e01f4a1769e696db0d6062ca9b8f56767c8
 .PP
-$ cryptoo verify_hash --msg mypassword --digest 89e01536ac207279409d4de1e5253e01f4a1769e696db0d6062ca9b8f56767c8
+$ cryptoo verify_hash --digest 89e01536ac207279409d4de1e5253e01f4a1769e696db0d6062ca9b8f56767c8 --msg mypassword
 .PP
 True
+.PP
+We can specify hashing algorithm from command line. Current choices are sha256, sha512 and md5. Default hashing algo is sha256.
+.PP
+$ cryptoo generate_hash --msg mypassword --algo md5
+.PP
+34819d7beeabb9260a5c854bc85b3e44
+.PP
+$ cryptoo verify_hash --msg mypassword --digest 34819d7beeabb9260a5c854bc85b3e44 --algo md5
+.PP
+True
+.SH Symmetric encryption
+$ echo "Hello world" > in.txt
+.PP
+$ cryptoo enc_des3 --textfile in.txt --secret mysecret
+.PP
+Cipher file for given plain file is successfully created
+.PP
+
+$ ls cipher.txt
+.PP
+cipher.txt
+.PP
+$ cryptoo dec_des3 --cipherfile cipher.txt --secret mysecret
+.PP
+Plain file for given cipher file is successfully created
+.PP
+$ cat plain.txt
+.PP
+Hello world
+
+.SH Asymmetric encryption
+$ cryptoo generate_key_pairs
+.PP
+Private-Public key pairs are successfully created
+.PP
+$ cryptoo encrypt --textfile in.txt --pubkey pubkey.pem
+.PP
+Cipher file for given plain file is successfully created
+.PP
+$ cryptoo decrypt --cipherfile cipher.txt --pvtkey pvtkey.pem
+.PP
+Plain file for given cipher file is successfully created
+
+.SH Digital sign & verify
+$ echo "Hello world" > in.txt
 .PP
 $ cryptoo generate_key_pairs
 .PP
 Private-Public key pairs are successfully created
 .PP
-$ cryptoo encrypt --in in.txt --pubkey pubkey.pem
+
+$ cryptoo sign --pvtkey pvtkey.pem --textfile in.txt
 .PP
-Cipher file for given plain file is successfully created
+Signature file is successfully created
 .PP
-$ cryptoo decrypt --in cipher.txt --pvtkey pvtkey.pem
+$ ls sign.txt
 .PP
-Plain file for given cipher file is successfully created
+sign.txt
+
+.PP
+$ cryptoo sign_verify --pubkey pubkey.pem --textfile in.txt --signfile sign.txt 
+.PP
+True
+
+.SH ToDO
+* Large size file encryption-decryption.
+
+.PP
+* Proper error handling.
+
+.PP
+* Implementation of JWT.
+
+.PP
+* Option to specify name of output file.
+
+.PP
+* Option to pass text from command line.
+
+.PP
+* More hashing algo choices.
 
 .SH BUGS
 https://github.com/rishikant42/Crypto-CLI
