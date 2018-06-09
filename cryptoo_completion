@@ -61,11 +61,11 @@ _cryptoo()
       if [[ $thr_prev == generate_hash ]] ; then
 
         case "${sec_prev}" in
-          --msg)
+          --msg | -m)
             COMPREPLY=( $(compgen -W "--algo" -- ${cur}) )
             return 0
             ;;
-          --algo)
+          --algo | -a)
             COMPREPLY=( $(compgen -W "--msg" -- ${cur}) )
             return 0
             ;;
@@ -76,15 +76,15 @@ _cryptoo()
       if [[ $thr_prev == verify_hash ]] ; then
 
         case "${sec_prev}" in
-          --msg)
+          --msg | -m)
             COMPREPLY=( $(compgen -W "--algo --digest" -- ${cur}) )
             return 0
             ;;
-          --algo)
+          --algo | -a)
             COMPREPLY=( $(compgen -W "--msg --digest" -- ${cur}) )
             return 0
             ;;
-          --digest)
+          --digest | -d)
             COMPREPLY=( $(compgen -W "--msg --algo" -- ${cur}) )
             return 0
             ;;
@@ -95,11 +95,11 @@ _cryptoo()
       if [[ $thr_prev == encrypt ]] ; then
 
         case "${sec_prev}" in
-          --textfile)
+          --textfile | -t)
             COMPREPLY=( $(compgen -W "--pubkey" -- ${cur}) )
             return 0
             ;;
-          --pubkey)
+          --pubkey | -p)
             COMPREPLY=( $(compgen -W "--textfile" -- ${cur}) )
             return 0
             ;;
@@ -110,11 +110,11 @@ _cryptoo()
       if [[ $thr_prev == decrypt ]] ; then
 
         case "${sec_prev}" in
-          --cipherfile)
+          --cipherfile | -c)
             COMPREPLY=( $(compgen -W "--pvtkey" -- ${cur}) )
             return 0
             ;;
-          --pvtkey)
+          --pvtkey | -p)
             COMPREPLY=( $(compgen -W "--cipherfile" -- ${cur}) )
             return 0
             ;;
@@ -125,11 +125,11 @@ _cryptoo()
       if [[ $thr_prev == enc_des3 ]] ; then
 
         case "${sec_prev}" in
-          --textfile)
+          --textfile | -t)
             COMPREPLY=( $(compgen -W "--secret" -- ${cur}) )
             return 0
             ;;
-          --secret)
+          --secret | -s)
             COMPREPLY=( $(compgen -W "--textfile" -- ${cur}) )
             return 0
             ;;
@@ -140,11 +140,11 @@ _cryptoo()
       if [[ $thr_prev == dec_des3 ]] ; then
 
         case "${sec_prev}" in
-          --secret)
+          --secret | -s)
             COMPREPLY=( $(compgen -W "--cipherfile" -- ${cur}) )
             return 0
             ;;
-          --cipherfile)
+          --cipherfile | -c)
             COMPREPLY=( $(compgen -W "--secret" -- ${cur}) )
             return 0
             ;;
@@ -155,11 +155,11 @@ _cryptoo()
       if [[ $thr_prev == sign ]] ; then
 
         case "${sec_prev}" in
-          --pvtkey)
+          --pvtkey | -p)
             COMPREPLY=( $(compgen -W "--textfile" -- ${cur}) )
             return 0
             ;;
-          --textfile)
+          --textfile | -t)
             COMPREPLY=( $(compgen -W "--pvtkey" -- ${cur}) )
             return 0
             ;;
@@ -170,15 +170,15 @@ _cryptoo()
       if [[ $thr_prev == sign_verify ]] ; then
 
         case "${sec_prev}" in
-          --textfile)
+          --textfile | -t)
             COMPREPLY=( $(compgen -W "--pubkey --signfile" -- ${cur}) )
             return 0
             ;;
-          --signfile)
+          --signfile | -s)
             COMPREPLY=( $(compgen -W "--textfile --pubkey" -- ${cur}) )
             return 0
             ;;
-          --pubkey)
+          --pubkey | -p)
             COMPREPLY=( $(compgen -W "--textfile --signfile" -- ${cur}) )
             return 0
             ;;
@@ -198,7 +198,7 @@ _cryptoo()
     if [[ $fiv_prev == verify_hash ]] ; then
 
       case "${for_prev}" in
-        --msg)
+        --msg | -m)
           if [[ $sec_prev == --algo ]] ; then
             COMPREPLY=( $(compgen -W "--digest" -- ${cur}) )
           elif [[ $sec_prev == --digest ]] ; then
@@ -207,7 +207,7 @@ _cryptoo()
           return 0
           ;;
 
-        --algo)
+        --algo | -a)
           if [[ $sec_prev == --msg ]] ; then
             COMPREPLY=( $(compgen -W "--digest" -- ${cur}) )
           elif [[ $sec_prev == --digest ]] ; then
@@ -216,7 +216,7 @@ _cryptoo()
           return 0
           ;;
 
-        --digest)
+        --digest | -d)
           if [[ $sec_prev == --msg ]] ; then
             COMPREPLY=( $(compgen -W "--algo" -- ${cur}) )
           elif [[ $sec_prev == --algo ]] ; then
@@ -232,7 +232,7 @@ _cryptoo()
     if [[ $fiv_prev == sign_verify ]] ; then
 
       case "${for_prev}" in
-        --textfile)
+        --textfile | -t)
           if [[ $sec_prev == --pubkey ]] ; then
             COMPREPLY=( $(compgen -W "--signfile" -- ${cur}) )
           elif [[ $sec_prev == --signfile ]] ; then
@@ -241,7 +241,7 @@ _cryptoo()
           return 0
           ;;
 
-        --pubkey)
+        --pubkey | -p)
           if [[ $sec_prev == --textfile ]] ; then
             COMPREPLY=( $(compgen -W "--signfile" -- ${cur}) )
           elif [[ $sec_prev == --signfile ]] ; then
@@ -250,7 +250,7 @@ _cryptoo()
           return 0
           ;;
 
-        --signfile)
+        --signfile | -s)
           if [[ $sec_prev == --textfile ]] ; then
             COMPREPLY=( $(compgen -W "--pubkey" -- ${cur}) )
           elif [[ $sec_prev == --pubkey ]] ; then
