@@ -52,10 +52,147 @@ _cryptoo()
 
   esac
 
+  if [[ $COMP_CWORD -gt 3 ]] ; then
 
-if [[ $COMP_CWORD == 1 ]] ; then
-  COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
-fi
+    sec_prev="${COMP_WORDS[COMP_CWORD-2]}"
+
+    thr_prev="${COMP_WORDS[COMP_CWORD-3]}"
+
+      if [[ $thr_prev == generate_hash ]] ; then
+
+        case "${sec_prev}" in
+          --msg)
+            COMPREPLY=( $(compgen -W "--algo" -- ${cur}) )
+            return 0
+            ;;
+          --algo)
+            COMPREPLY=( $(compgen -W "--msg" -- ${cur}) )
+            return 0
+            ;;
+        esac
+
+      fi
+
+      if [[ $thr_prev == verify_hash ]] ; then
+
+        case "${sec_prev}" in
+          --msg)
+            COMPREPLY=( $(compgen -W "--algo --digest" -- ${cur}) )
+            return 0
+            ;;
+          --algo)
+            COMPREPLY=( $(compgen -W "--msg --digest" -- ${cur}) )
+            return 0
+            ;;
+          --digest)
+            COMPREPLY=( $(compgen -W "--msg --algo" -- ${cur}) )
+            return 0
+            ;;
+        esac
+
+      fi
+
+      if [[ $thr_prev == encrypt ]] ; then
+
+        case "${sec_prev}" in
+          --textfile)
+            COMPREPLY=( $(compgen -W "--pubkey" -- ${cur}) )
+            return 0
+            ;;
+          --pubkey)
+            COMPREPLY=( $(compgen -W "--textfile" -- ${cur}) )
+            return 0
+            ;;
+        esac
+
+      fi
+
+      if [[ $thr_prev == decrypt ]] ; then
+
+        case "${sec_prev}" in
+          --cipherfile)
+            COMPREPLY=( $(compgen -W "--pvtkey" -- ${cur}) )
+            return 0
+            ;;
+          --pvtkey)
+            COMPREPLY=( $(compgen -W "--cipherfile" -- ${cur}) )
+            return 0
+            ;;
+        esac
+
+      fi
+
+      if [[ $thr_prev == enc_des3 ]] ; then
+
+        case "${sec_prev}" in
+          --textfile)
+            COMPREPLY=( $(compgen -W "--secret" -- ${cur}) )
+            return 0
+            ;;
+          --secret)
+            COMPREPLY=( $(compgen -W "--textfile" -- ${cur}) )
+            return 0
+            ;;
+        esac
+
+      fi
+
+      if [[ $thr_prev == dec_des3 ]] ; then
+
+        case "${sec_prev}" in
+          --secret)
+            COMPREPLY=( $(compgen -W "--cipherfile" -- ${cur}) )
+            return 0
+            ;;
+          --cipherfile)
+            COMPREPLY=( $(compgen -W "--secret" -- ${cur}) )
+            return 0
+            ;;
+        esac
+
+      fi
+
+      if [[ $thr_prev == sign ]] ; then
+
+        case "${sec_prev}" in
+          --pvtkey)
+            COMPREPLY=( $(compgen -W "--textfile" -- ${cur}) )
+            return 0
+            ;;
+          --textfile)
+            COMPREPLY=( $(compgen -W "--pvtkey" -- ${cur}) )
+            return 0
+            ;;
+        esac
+
+      fi
+
+      if [[ $thr_prev == sign_verify ]] ; then
+
+        case "${sec_prev}" in
+          --textfile)
+            COMPREPLY=( $(compgen -W "--pubkey --signfile" -- ${cur}) )
+            return 0
+            ;;
+          --signfile)
+            COMPREPLY=( $(compgen -W "--textfile --pubkey" -- ${cur}) )
+            return 0
+            ;;
+          --pubkey)
+            COMPREPLY=( $(compgen -W "--textfile --signfile" -- ${cur}) )
+            return 0
+            ;;
+        esac
+
+      fi
+
+  fi
+
+  if [[ $COMP_CWORD == 1 ]] ; then
+    COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
+  fi
+
 return 0
+
 }
 complete -o default -F _cryptoo cryptoo
