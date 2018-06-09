@@ -46,10 +46,16 @@ Plain file for given cipher file is successfully created
 $ cat plain.txt
 Hello World
 
-$ cryptoo crypto.py enc_des3 --in in.txt --secret 'mysecret'
+$ cryptoo enc_des3 --in in.txt --secret 'mysecret'
 Plain file for given cipher file is successfully created
 
-$ cryptoo crypto.py dec_des3 --in cipher.txt --secret 'mysecret'
+$ cryptoo dec_des3 --in cipher.txt --secret 'mysecret'
 Cipher file for given plain file is successfully created
+
+$ cryptoo sign --infile in.txt --pvtkey pvtkey.pem
+Signature file is successfully created
+
+$ cryptoo sign_verify --infile in.txt --pubkey pubkey.pem --signfile sign.txt
+True
 
 ```
