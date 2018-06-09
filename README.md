@@ -22,7 +22,7 @@ A `cryptoo` Unix/Linux CLI to perform cryptographic operations. Source code is w
 ```
 $ git clone https://github.com/rishikant42/Crypto-CLI
 $ cd Crypto-CLI
-$ ./install.sh 
+$ ./install.sh
 
 Add following lines to ~/.bashrc (or ~/.bash_profile)
 
@@ -115,6 +115,15 @@ sign.txt
 
 $ cryptoo sign_verify --pubkey pubkey.pem --textfile in.txt --signfile sign.txt 
 True
+```
+
+### Uninstall instructions:
+```
+$ ./uninstall.sh
+
+    OR
+
+$ make uninstall
 ```
 
 ### ToDo:
