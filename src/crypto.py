@@ -42,7 +42,7 @@ def main():
 
     parser_sign = subparsers.add_parser('sign')
     parser_sign.add_argument("-p", "--pvtkey", nargs="?")
-    parser_sign.add_argument("-t", "--texfile", nargs="?")
+    parser_sign.add_argument("-t", "--textfile", nargs="?")
 
     parser_sign_verify = subparsers.add_parser('sign_verify')
     parser_sign_verify.add_argument("-p", "--pubkey", nargs="?")
