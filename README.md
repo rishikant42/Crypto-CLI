@@ -65,15 +65,15 @@ True
 $ echo "Hello world" > in.txt
 
 $ cryptoo enc_des3 --textfile in.txt --secret mysecret
-Cipher file for given plain file is successfully created
+Ciphertext file 'cipher.txt' is successfully created
 
-$ ls cipher.txt 
+$ ls cipher.txt
 cipher.txt
 
  $ cryptoo dec_des3 --cipherfile cipher.txt --secret mysecret
-Plain file for given cipher file is successfully created
+Plaintext file 'plain.txt' is successfully created
 
-$ cat plain.txt 
+$ cat plain.txt
 Hello world
 ```
 
@@ -84,19 +84,19 @@ $ echo "Hello world" > in.txt
 
 * Lets create a private-public key pairs
 
-$ cryptoo generate_key_pairs 
-Private-Public key pairs are successfully created
+$ cryptoo generate_key_pairs
+Private-Public key pairs (pvtkey.pem & pubkey.pem) are successfully created
 
-$ ls pvtkey.pem pubkey.pem 
+$ ls pvtkey.pem pubkey.pem
 pubkey.pem	pvtkey.pem
 
-$ cryptoo encrypt --textfile in.txt --pubkey pubkey.pem 
-Cipher file for given plain file is successfully created
+$ cryptoo encrypt --textfile in.txt --pubkey pubkey.pem
+Ciphertext file 'cipher.txt' is successfully created
 
 $ cryptoo decrypt --cipherfile cipher.txt --pvtkey pvtkey.pem 
-Plain file for given cipher file is successfully created
+Plaintext file 'plain.txt' is successfully created
 
-$ cat plain.txt 
+$ cat plain.txt
 Hello world
 ```
 
@@ -104,13 +104,13 @@ Hello world
 
 ```
 $ echo "Hello world" > in.txt
-$ cryptoo generate_key_pairs 
-Private-Public key pairs are successfully created
+$ cryptoo generate_key_pairs
+Private-Public key pairs (pvtkey.pem & pubkey.pem) are successfully created
 
-$ cryptoo sign --pvtkey pvtkey.pem --textfile in.txt 
-Signature file is successfully created
+$ cryptoo sign --pvtkey pvtkey.pem --textfile in.txt
+Signature file 'sign.txt' is successfully created
 
-$ ls sign.txt 
+$ ls sign.txt
 sign.txt
 
 $ cryptoo sign_verify --pubkey pubkey.pem --textfile in.txt --signfile sign.txt 

@@ -57,7 +57,7 @@ $ echo "Hello world" > in.txt
 .PP
 $ cryptoo enc_des3 --textfile in.txt --secret mysecret
 .PP
-Cipher file for given plain file is successfully created
+Ciphertext file 'cipher.txt' is successfully created
 .PP
 
 $ ls cipher.txt
@@ -66,7 +66,7 @@ cipher.txt
 .PP
 $ cryptoo dec_des3 --cipherfile cipher.txt --secret mysecret
 .PP
-Plain file for given cipher file is successfully created
+Plaintext file 'plain.txt' is successfully created
 .PP
 $ cat plain.txt
 .PP
@@ -75,27 +75,27 @@ Hello world
 .SH Asymmetric encryption
 $ cryptoo generate_key_pairs
 .PP
-Private-Public key pairs are successfully created
+Private-Public key pairs (pvtkey.pem & pubkey.pem) are successfully created
 .PP
 $ cryptoo encrypt --textfile in.txt --pubkey pubkey.pem
 .PP
-Cipher file for given plain file is successfully created
+Ciphertext file 'cipher.txt' is successfully created
 .PP
 $ cryptoo decrypt --cipherfile cipher.txt --pvtkey pvtkey.pem
 .PP
-Plain file for given cipher file is successfully created
+Plaintext file 'plain.txt' is successfully created
 
 .SH Digital sign & verify
 $ echo "Hello world" > in.txt
 .PP
 $ cryptoo generate_key_pairs
 .PP
-Private-Public key pairs are successfully created
+Private-Public key pairs (pvtkey.pem & pubkey.pem) are successfully created
 .PP
 
 $ cryptoo sign --pvtkey pvtkey.pem --textfile in.txt
 .PP
-Signature file is successfully created
+Signature file 'sign.txt' is successfully created
 .PP
 $ ls sign.txt
 .PP

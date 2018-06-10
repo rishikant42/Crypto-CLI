@@ -14,7 +14,7 @@ def generate_key_pairs():
     pub_key_file = open('pubkey.pem', 'w')
     pub_key_file.write(pub_key)
     pub_key_file.close()
-    return "Private-Public key pairs are successfully created"
+    return "Private-Public key pairs (pvtkey.pem & pubkey.pem) are successfully created"
 
 def import_key(file_name):
     key = open(file_name, 'r').read()

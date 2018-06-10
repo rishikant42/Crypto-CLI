@@ -11,7 +11,7 @@ def encrypt(key_file, in_file):
     cipher_file = open('cipher.txt', 'w')
     cipher_file.write(str(cipher))
     cipher_file.close()
-    return "Cipher file for given plain file is successfully created"
+    return "Ciphertext file 'cipher.txt' is successfully created"
 
 def decrypt(key_file, cipher_file):
     key = import_key(key_file)
@@ -22,7 +22,7 @@ def decrypt(key_file, cipher_file):
     plain_file = open('plain.txt', 'w')
     plain_file.write(plain_text)
     plain_file.close()
-    return "Plain file for given cipher file is successfully created"
+    return "Plaintext file 'plain.txt' is successfully created"
 
 def enc_des3(secret, in_file):
     if len(secret) > 16:
@@ -44,7 +44,7 @@ def enc_des3(secret, in_file):
     cipher_file = open('cipher.txt', 'w')
     cipher_file.write(str(cipher))
     cipher_file.close()
-    return "Cipher file for given plain file is successfully created"
+    return "Ciphertext file 'cipher.txt' is successfully created"
 
 def dec_des3(secret, cipher_file):
     if len(secret) > 16:
@@ -63,4 +63,4 @@ def dec_des3(secret, cipher_file):
     plain_file = open('plain.txt', 'w')
     plain_file.write(str(plain_text))
     plain_file.close()
-    return "Plain file for given cipher file is successfully created"
+    return "Plaintext file 'plain.txt' is successfully created"

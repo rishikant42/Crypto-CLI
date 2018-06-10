@@ -15,7 +15,7 @@ def sign(key_file, in_file):
     sign_file = open('sign.txt', 'w')
     sign_file.write(str(signature))
     sign_file.close()
-    return "Signature file is successfully created"
+    return "Signature file 'sign.txt' is successfully created"
 
 
 def sign_verify(key_file, sign_file, in_file):
