@@ -5,6 +5,8 @@ chmod a+x src/crypto.py
 
 cp cryptoo /usr/local/bin/
 
+cp -r src /usr/local/bin/cryptoosrc
+
 cp cryptoo.1 /usr/local/share/man/man1/
 
 if [ ! -d /usr/local/etc/bash_completion.d/ ]; then

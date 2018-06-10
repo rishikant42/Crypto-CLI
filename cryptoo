@@ -1,2 +1,2 @@
 #!/bin/bash
-~/prcts/Crypto-CLI/src/crypto.py "$@"
+/usr/local/bin/cryptoosrc/crypto.py "$@"
