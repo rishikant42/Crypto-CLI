@@ -1,4 +1,4 @@
-#!/usr/bin/python2.7
+#!/usr/local/bin/cryptoenv/bin/python
 
 import argparse
 from sys import argv
