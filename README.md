@@ -141,3 +141,7 @@ $ make uninstall
 * More hashing algo choices.
 
 ```
+
+### License
+
+See the [LICENSE](LICENSE.md) file for license rights and limitations (MIT).
